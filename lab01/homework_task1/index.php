@@ -1,6 +1,6 @@
 <?php
-$name = isset($_GET["name"]) ? htmlspecialchars(trim($_GET["name"]), ENT_QUOTES, "UTF-8") : "гость";
-$role = isset($_GET["role"]) ? htmlspecialchars(trim($_GET["role"]), ENT_QUOTES, "UTF-8") : "guest";
+$name = isset($_GET["name"]) ? htmlspecialchars(trim($_GET["name"]), ENT_QUOTES | ENT_SUBSTITUTE, "UTF-8") : "гость";
+$role = isset($_GET["role"]) ? htmlspecialchars(trim($_GET["role"]), ENT_QUOTES | ENT_SUBSTITUTE, "UTF-8") : "guest";
 
 $protocol = isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on" ? "https://" : "http://";
 
