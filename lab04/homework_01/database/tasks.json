@@ -8,5 +8,10 @@
         "title": "Вторая задача",
         "description": "Думаю....",
         "photo": "uploads\/task2.jpg"
+    },
+    "3": {
+        "title": "123",
+        "description": "12345",
+        "photo": "uploads\/task3.jpg"
     }
 }
