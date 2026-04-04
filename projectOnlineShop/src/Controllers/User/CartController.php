@@ -2,7 +2,9 @@
 
 namespace ProjectOnlineShop\Controllers\User;
 
-class CartController
+use ProjectOnlineShop\Core\AbstractController;
+
+class CartController extends AbstractController
 {
 
 }

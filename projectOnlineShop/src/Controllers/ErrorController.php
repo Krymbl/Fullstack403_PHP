@@ -2,6 +2,8 @@
 
 namespace ProjectOnlineShop\Controllers;
 
-class ErrorController {
+use ProjectOnlineShop\Core\AbstractController;
+
+class ErrorController extends AbstractController {
 
 }

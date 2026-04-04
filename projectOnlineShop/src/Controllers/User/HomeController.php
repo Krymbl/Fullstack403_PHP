@@ -2,7 +2,9 @@
 
 namespace ProjectOnlineShop\Controllers\User;
 
-class HomeController
+use ProjectOnlineShop\Core\AbstractController;
+
+class HomeController extends AbstractController
 {
 
 }

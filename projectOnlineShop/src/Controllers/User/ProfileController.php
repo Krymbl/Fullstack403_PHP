@@ -2,7 +2,9 @@
 
 namespace ProjectOnlineShop\Controllers\User;
 
-class ProfileController
+use ProjectOnlineShop\Core\AbstractController;
+
+class ProfileController extends AbstractController
 {
 
 }

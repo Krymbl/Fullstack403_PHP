@@ -2,7 +2,9 @@
 
 namespace ProjectOnlineShop\Controllers\user;
 
-class AuthController
+use ProjectOnlineShop\Core\AbstractController;
+
+class AuthController extends AbstractController
 {
 
 }

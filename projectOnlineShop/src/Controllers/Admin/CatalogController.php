@@ -2,7 +2,9 @@
 
 namespace ProjectOnlineShop\Controllers\Admin;
 
-class CatalogController
+use ProjectOnlineShop\Core\AbstractController;
+
+class CatalogController extends AbstractController
 {
 
 }
