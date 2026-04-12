@@ -1,0 +1,6 @@
+2026-04-11 20:04:37 [DEBUG] Конфиг загружен
+2026-04-11 20:04:37 [DEBUG] APP_NAME: lab07_Practice01; APP_ENV: dev; APP_DEBUG: true; DB_HOST: localhost; DB_NAME: practice_01; DB_USER: posgres; DB_PASS: qwerty
+2026-04-11 20:05:53 [DEBUG] Конфиг загружен
+2026-04-11 20:05:53 [DEBUG] APP_NAME: lab07_Practice01; APP_ENV: dev; APP_DEBUG: true; DB_HOST: localhost; DB_NAME: practice_01; DB_USER: posgres; DB_PASS: qwerty
+2026-04-11 23:09:50 [DEBUG] Конфиг загружен
+2026-04-11 23:09:50 [DEBUG] APP_NAME: lab07_Practice01; APP_ENV: dev; APP_DEBUG: true; DB_HOST: localhost; DB_NAME: practice_01; DB_USER: posgres; DB_PASS: qwerty

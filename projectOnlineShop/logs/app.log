@@ -1,0 +1,5 @@
+[2026-04-15T13:59:13.103516+00:00] app.ERROR: Конфиг не найден по пути: C:\Users\dasts\PhpstormProjects\403_fullstack_sem1\course-php\projectOnlineShop\public/.. [] []
+[2026-04-15T17:00:45.688412+03:00] app.ERROR: Конфиг не найден по пути: C:\Users\dasts\PhpstormProjects\403_fullstack_sem1\course-php\projectOnlineShop\public/.. [] []
+[2026-04-15T17:02:02.546596+03:00] app.INFO: Конфиг загружен [] []
+[2026-04-19T19:51:29.478364+03:00] app.INFO: Конфиг загружен [] []
+[2026-04-19T20:13:02.585519+03:00] app.INFO: Конфиг загружен [] []
