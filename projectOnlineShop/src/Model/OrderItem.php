@@ -12,7 +12,8 @@ class OrderItem
         private int  $price,
         private ?int $id = null
     )
-    {}
+    {
+    }
 
 
     public function getPrice(): int

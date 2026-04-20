@@ -2,14 +2,17 @@
 
 namespace ProjectOnlineShop\Model;
 
-class Cart {
+class Cart
+{
 
     public function __construct(
-        private int $userId,
-        private int $productId,
-        private int $quantity,
+        private int  $userId,
+        private int  $productId,
+        private int  $quantity,
         private ?int $id = null,
-    ){}
+    )
+    {
+    }
 
     public function getUserId(): int
     {

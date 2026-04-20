@@ -1,14 +1,14 @@
 <?php
 
-namespace ProjectOnlineShop\Model;
+namespace ProjectOnlineShop\Dto;
 
 use ProjectOnlineShop\Enums\Role;
 
-class User
+class UserDto
 {
+
     public function __construct(
         private string  $email,
-        private string  $passwordHash,
         private Role    $role = Role::USER,
         private ?string $name = null,
         private ?string $surname = null,
@@ -27,16 +27,6 @@ class User
     public function setEmail(string $email): void
     {
         $this->email = $email;
-    }
-
-    public function getPasswordHash(): string
-    {
-        return $this->passwordHash;
-    }
-
-    public function setPasswordHash(string $passwordHash): void
-    {
-        $this->passwordHash = $passwordHash;
     }
 
     public function getRole(): Role

@@ -1,30 +1,33 @@
 <?php
 
 namespace ProjectOnlineShop\Model;
+
 use DateTimeImmutable;
 use ProjectOnlineShop\Enums\DeliveryType;
 use ProjectOnlineShop\Enums\PaymentMethod;
 use ProjectOnlineShop\Enums\Status;
 
-class Order {
-
+class Order
+{
     public function __construct(
-        private int $userId,
-        private int $totalPrice,
-        private Status $status,
-        private DeliveryType $deliveryType,
-        private PaymentMethod $paymentMethod,
-        private string $firstName,
-        private string $lastName,
-        private string $patronymic,
-        private string $phone,
-        private string $city,
-        private string $street,
-        private string $house,
-        private string $apartment,
-        private DateTimeImmutable $createdAt,
-        private ?int $id = null
-    ){}
+        private int              $userId,
+        private int               $totalPrice,
+        private string            $firstName,
+        private string            $lastName,
+        private string            $phone,
+        private DeliveryType      $deliveryType = DeliveryType::PICKUP,
+        private PaymentMethod     $paymentMethod = PaymentMethod::CASH,
+        private Status            $status = Status::NEW,
+        private ?string           $patronymic = null,
+        private ?string           $city = null,
+        private ?string           $street = null,
+        private ?string           $house = null,
+        private ?string           $apartment = null,
+        private ?int              $id = null,
+        private DateTimeImmutable $createdAt = new DateTimeImmutable(),
+    )
+    {
+    }
 
     public function getUserId(): int
     {
@@ -96,12 +99,12 @@ class Order {
         $this->lastName = $lastName;
     }
 
-    public function getPatronymic(): string
+    public function getPatronymic(): ?string
     {
         return $this->patronymic;
     }
 
-    public function setPatronymic(string $patronymic): void
+    public function setPatronymic(?string $patronymic): void
     {
         $this->patronymic = $patronymic;
     }
@@ -116,42 +119,42 @@ class Order {
         $this->phone = $phone;
     }
 
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }
 
-    public function setCity(string $city): void
+    public function setCity(?string $city): void
     {
         $this->city = $city;
     }
 
-    public function getStreet(): string
+    public function getStreet(): ?string
     {
         return $this->street;
     }
 
-    public function setStreet(string $street): void
+    public function setStreet(?string $street): void
     {
         $this->street = $street;
     }
 
-    public function getHouse(): string
+    public function getHouse(): ?string
     {
         return $this->house;
     }
 
-    public function setHouse(string $house): void
+    public function setHouse(?string $house): void
     {
         $this->house = $house;
     }
 
-    public function getApartment(): string
+    public function getApartment(): ?string
     {
         return $this->apartment;
     }
 
-    public function setApartment(string $apartment): void
+    public function setApartment(?string $apartment): void
     {
         $this->apartment = $apartment;
     }
@@ -161,21 +164,13 @@ class Order {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeImmutable $createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(int $id): void
+    public function setId(?int $id): void
     {
         $this->id = $id;
     }
-
-
-
 }
