@@ -24,19 +24,9 @@ class UserDto
         return $this->email;
     }
 
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
-    }
-
     public function getRole(): Role
     {
         return $this->role;
-    }
-
-    public function setRole(Role $role): void
-    {
-        $this->role = $role;
     }
 
     public function getName(): ?string
@@ -44,19 +34,9 @@ class UserDto
         return $this->name;
     }
 
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
-    }
-
     public function getSurname(): ?string
     {
         return $this->surname;
-    }
-
-    public function setSurname(?string $surname): void
-    {
-        $this->surname = $surname;
     }
 
     public function getPatronymic(): ?string
@@ -64,19 +44,9 @@ class UserDto
         return $this->patronymic;
     }
 
-    public function setPatronymic(?string $patronymic): void
-    {
-        $this->patronymic = $patronymic;
-    }
-
     public function getPhone(): ?string
     {
         return $this->phone;
-    }
-
-    public function setPhone(?string $phone): void
-    {
-        $this->phone = $phone;
     }
 
     public function getId(): ?int
@@ -84,8 +54,4 @@ class UserDto
         return $this->id;
     }
 
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
-    }
 }

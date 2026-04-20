@@ -12,10 +12,10 @@ class Product
         private int     $price,
         private int     $quantity,
         private bool    $isAvailable,
-        private ?int    $id = null,
         private ?string $model = null,
         private ?string $description = null,
         private ?string $imageUrl = null,
+        private ?int    $id = null
     )
     {
     }
