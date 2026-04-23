@@ -6,7 +6,7 @@ use Monolog\Logger;
 use PDO;
 use PDOException;
 use ProjectOnlineShop\Core\Database;
-use ProjectOnlineShop\Core\LoggerFactory;
+use ProjectOnlineShop\Core\Loggers\AppLoggerFactory;
 use ProjectOnlineShop\Exceptions\DBException;
 use ProjectOnlineShop\Model\Product;
 
@@ -21,7 +21,7 @@ class ProductRepository implements Repository
     public function __construct()
     {
         $this->connection = Database::getConnection();
-        $this->logger = LoggerFactory::getLogger();
+        $this->logger = AppLoggerFactory::getLogger();
     }
 
     public function save(Product $product): int
@@ -45,8 +45,9 @@ class ProductRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось сохранить сущность Product с именем: {$product->getName()}";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         } catch (DBException $e) {
             throw $e;
         }
@@ -71,8 +72,9 @@ class ProductRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось обновить сущность Product с ID: {$product->getId()}";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -88,8 +90,9 @@ class ProductRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось удалить сущность Product с ID: $id";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -111,45 +114,33 @@ class ProductRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось найти сущность Product с ID: $id";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
-    public function findAll(): array
-    {
-        try {
-            $sql = "SELECT * FROM products";
-            $stmt = $this->connection->prepare($sql);
-
-            $stmt->execute();
-
-            $rows = $stmt->fetchAll();
-            $result = [];
-
-            foreach ($rows as $row) {
-                $result[] = $this->mapToProduct($row);
-            }
-
-            return $result;
-
-        } catch (PDOException $e) {
-            $message = "Не удалось получить список всех сущностей Product";
-            $this->logger->error($message);
-            throw new DBException($message);
-        }
-    }
-
-    public function findAllByFilter( //TODO изменить полностью добавить поиск по названию
+    public function findAllByFilter(
+        ?string $name = null,
+        ?int  $minPrice = null,
+        ?int  $maxPrice = null,
+        ?string $model = null,
         ?int $categoryId = null,
         ?int $brandId = null,
-        ?int $minPrice = null,
-        ?int $maxPrice = null,
-    ): array
+    ): array //TODO изменить полностью добавить поиск по названию
     {
         try {
             $sql = "SELECT * FROM products WHERE is_available = true AND quantity > 0";
             $params = [];
+
+            if ($name !== null) {
+                $sql .= " AND name ILIKE :name";
+                $params["name"] = "%{$name}%";
+            }
+            if ($model !== null) {
+                $sql .= " AND model ILIKE :model";
+                $params["model"] = "%{$model}%";
+            }
 
             if ($categoryId !== null) {
                 $sql .= " AND category_id = :categoryId";
@@ -187,6 +178,31 @@ class ProductRepository implements Repository
             $message = "Не удалось получить список продуктов по фильтру";
             $this->logger->error($message);
             throw new DBException($message);
+        }
+    }
+
+    public function findAll(): array
+    {
+        try {
+            $sql = "SELECT * FROM products";
+            $stmt = $this->connection->prepare($sql);
+
+            $stmt->execute();
+
+            $rows = $stmt->fetchAll();
+            $result = [];
+
+            foreach ($rows as $row) {
+                $result[] = $this->mapToProduct($row);
+            }
+
+            return $result;
+
+        } catch (PDOException $e) {
+            $message = "Не удалось получить список всех сущностей Product";
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 

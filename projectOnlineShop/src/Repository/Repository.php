@@ -6,6 +6,7 @@ namespace ProjectOnlineShop\Repository;
  */
 interface Repository
 {
+
     #public function save($entity): int;
 
     #public function update(object $entity): int;

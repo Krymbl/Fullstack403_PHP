@@ -5,6 +5,7 @@ namespace ProjectOnlineShop\Core;
 use Monolog\Logger;
 use PDO;
 use PDOException;
+use ProjectOnlineShop\Core\Loggers\AppLoggerFactory;
 use ProjectOnlineShop\Exceptions\ConnectionException;
 
 class Database
@@ -23,7 +24,7 @@ class Database
     public static function getConnection(): PDO
     {
         if (self::$logger === null) {
-            self::$logger = LoggerFactory::getLogger();
+            self::$logger = AppLoggerFactory::getLogger();;
         }
         if (self::$connection === null) {
             self::$connection = self::connect();

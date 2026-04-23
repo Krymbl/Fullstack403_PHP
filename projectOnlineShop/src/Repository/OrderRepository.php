@@ -7,7 +7,7 @@ use Monolog\Logger;
 use PDO;
 use PDOException;
 use ProjectOnlineShop\Core\Database;
-use ProjectOnlineShop\Core\LoggerFactory;
+use ProjectOnlineShop\Core\Loggers\AppLoggerFactory;
 use ProjectOnlineShop\Enums\DeliveryType;
 use ProjectOnlineShop\Enums\PaymentMethod;
 use ProjectOnlineShop\Enums\Status;
@@ -25,7 +25,7 @@ class OrderRepository implements Repository
     public function __construct()
     {
         $this->connection = Database::getConnection();
-        $this->logger = LoggerFactory::getLogger();
+        $this->logger = AppLoggerFactory::getLogger();
     }
 
     public function save(Order $order): int
@@ -53,8 +53,9 @@ class OrderRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось сохранить сущность Order для пользователя с ID: {$order->getUserId()}";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         } catch (DBException $e) {
             throw $e;
         }
@@ -81,8 +82,9 @@ class OrderRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось обновить сущность Order с ID: {$order->getId()}";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -98,8 +100,9 @@ class OrderRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось удалить сущность Order с ID: $id";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -121,8 +124,9 @@ class OrderRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось найти сущность Order с ID: $id";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -145,8 +149,9 @@ class OrderRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось получить список всех сущностей Order";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -169,8 +174,9 @@ class OrderRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось получить список заказов пользователя с ID: $userId";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -199,11 +205,11 @@ class OrderRepository implements Repository
         return new Order(
             $row['user_id'],
             $row['total_price'],
-            DeliveryType::from($row['delivery_type']), //TODO почему?
-            PaymentMethod::from($row['payment_method']),
             $row['first_name'],
             $row['last_name'],
             $row['phone'],
+            DeliveryType::from($row['delivery_type']),
+            PaymentMethod::from($row['payment_method']),
             Status::from($row['status']),
             $row['patronymic'],
             $row['city'],
@@ -211,7 +217,7 @@ class OrderRepository implements Repository
             $row['house'],
             $row['apartment'],
             $row['id'],
-            new DateTimeImmutable($row['created_at']), //TODO разобраться с этой строчкой
+            new DateTimeImmutable($row['created_at']),
         );
     }
 }

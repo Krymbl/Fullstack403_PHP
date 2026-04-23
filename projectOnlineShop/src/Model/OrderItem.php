@@ -2,7 +2,7 @@
 
 namespace ProjectOnlineShop\Model;
 
-class OrderItem //TODO разве не нужно хранить id пользователя? Чтобы знать, какие у него заказы
+class OrderItem
 {
 
     public function __construct(

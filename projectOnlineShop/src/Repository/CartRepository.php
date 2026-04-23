@@ -6,7 +6,7 @@ use Monolog\Logger;
 use PDO;
 use PDOException;
 use ProjectOnlineShop\Core\Database;
-use ProjectOnlineShop\Core\LoggerFactory;
+use ProjectOnlineShop\Core\Loggers\AppLoggerFactory;
 use ProjectOnlineShop\Exceptions\DBException;
 use ProjectOnlineShop\Model\Cart;
 
@@ -21,7 +21,7 @@ class CartRepository implements Repository
     public function __construct()
     {
         $this->connection = Database::getConnection();
-        $this->logger = LoggerFactory::getLogger();
+        $this->logger = AppLoggerFactory::getLogger();;
     }
 
     public function save(Cart $cart): int
@@ -47,8 +47,9 @@ class CartRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось сохранить сущность Cart для пользователя с ID: {$cart->getUserId()}";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         } catch (DBException $e) {
             throw $e;
         }
@@ -71,8 +72,9 @@ class CartRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось обновить сущность Cart с ID: {$cart->getId()}";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -88,8 +90,9 @@ class CartRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось удалить сущность Cart с ID: $id";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -111,8 +114,9 @@ class CartRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось найти сущность Cart с ID: $id";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -135,8 +139,9 @@ class CartRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось получить список всех сущностей Cart";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -159,8 +164,9 @@ class CartRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось получить корзину пользователя с ID: $userId";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -176,15 +182,16 @@ class CartRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось очистить корзину пользователя с ID: $userId";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
     public function deleteByProductId(int $productId): int
     {
         try {
-            $sql = "DELETE FROM cart WHERE produc_id = :productId";
+            $sql = "DELETE FROM cart WHERE product_id = :productId";
             $stmt = $this->connection->prepare($sql);
 
             $stmt->execute(['productId' => $productId]);
@@ -193,8 +200,9 @@ class CartRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось удалить товар с ID: $productId";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 

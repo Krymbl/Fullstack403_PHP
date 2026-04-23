@@ -6,7 +6,7 @@ use ProjectOnlineShop\Core\AbstractController;
 
 class ErrorController extends AbstractController {
 
-    public function internalError() : void {
+    public static function internalError() : void {
         http_response_code(500);
 
         echo "<html lang='ru'>
@@ -22,7 +22,7 @@ class ErrorController extends AbstractController {
             ";
     }
 
-    public function notFound() : void {
+    public static function notFound() : void {
         http_response_code(404);
         echo "<html lang='ru'>
                 <head>
@@ -37,7 +37,7 @@ class ErrorController extends AbstractController {
             ";
     }
 
-    public function accessDenied() : void {
+    public static function accessDenied() : void {
         http_response_code(403);
         echo "<html lang='ru'>
                 <head>

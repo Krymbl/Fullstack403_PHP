@@ -6,7 +6,7 @@ use Monolog\Logger;
 use PDO;
 use PDOException;
 use ProjectOnlineShop\Core\Database;
-use ProjectOnlineShop\Core\LoggerFactory;
+use ProjectOnlineShop\Core\Loggers\AppLoggerFactory;
 use ProjectOnlineShop\Exceptions\DBException;
 use ProjectOnlineShop\Model\Category;
 
@@ -21,7 +21,7 @@ class CategoryRepository implements Repository
     public function __construct()
     {
         $this->connection = Database::getConnection();
-        $this->logger = LoggerFactory::getLogger();
+        $this->logger = AppLoggerFactory::getLogger();
     }
 
     public function save(Category $category): int
@@ -44,8 +44,9 @@ class CategoryRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось сохранить сущность Category с именем: {$category->getName()}";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         } catch (DBException $e) {
             throw $e;
         }
@@ -66,8 +67,9 @@ class CategoryRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось обновить сущность Category с ID: {$category->getId()}";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -83,8 +85,9 @@ class CategoryRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось удалить сущность Category с ID: $id";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -106,8 +109,9 @@ class CategoryRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось найти сущность Category с ID: $id";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -130,8 +134,9 @@ class CategoryRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось получить список всех сущностей Category";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 

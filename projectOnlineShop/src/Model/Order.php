@@ -10,7 +10,7 @@ use ProjectOnlineShop\Enums\Status;
 class Order
 {
     public function __construct(
-        private int              $userId,
+        private int               $userId,
         private int               $totalPrice,
         private string            $firstName,
         private string            $lastName,

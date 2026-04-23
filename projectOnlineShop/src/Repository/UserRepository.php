@@ -6,15 +6,13 @@ use Monolog\Logger;
 use PDO;
 use PDOException;
 use ProjectOnlineShop\Core\Database;
-use ProjectOnlineShop\Core\LoggerFactory;
+use ProjectOnlineShop\Core\Loggers\AppLoggerFactory;
 use ProjectOnlineShop\Dto\UserDto;
 use ProjectOnlineShop\Enums\Role;
 use ProjectOnlineShop\Exceptions\DBException;
 use ProjectOnlineShop\Model\User;
 
-/**
- * @implements Repository<UserDto>
- */
+
 class UserRepository implements Repository
 {
     private PDO $connection;
@@ -23,7 +21,7 @@ class UserRepository implements Repository
     public function __construct()
     {
         $this->connection = Database::getConnection();
-        $this->logger = LoggerFactory::getLogger();
+        $this->logger = AppLoggerFactory::getLogger();
     }
 
     public function save(User $user): int
@@ -53,8 +51,9 @@ class UserRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось сохранить сущность User с email: {$user->getEmail()}";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         } catch (DBException $e) {
             throw $e;
         }
@@ -82,8 +81,9 @@ class UserRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось обновить сущность User с ID: {$user->getId()}";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -102,8 +102,9 @@ class UserRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось обновить пароль пользователя с ID: $id";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -122,8 +123,9 @@ class UserRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось обновить email пользователя с ID: $id";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -139,8 +141,9 @@ class UserRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось удалить сущность User с ID: $id";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -162,8 +165,9 @@ class UserRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось найти сущность User с ID: $id";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -185,8 +189,9 @@ class UserRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось найти сущность User с email: $email";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -209,8 +214,9 @@ class UserRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось получить список всех сущностей User";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 

@@ -6,7 +6,7 @@ use Monolog\Logger;
 use PDO;
 use PDOException;
 use ProjectOnlineShop\Core\Database;
-use ProjectOnlineShop\Core\LoggerFactory;
+use ProjectOnlineShop\Core\Loggers\AppLoggerFactory;
 use ProjectOnlineShop\Exceptions\DBException;
 use ProjectOnlineShop\Model\OrderItem;
 
@@ -21,7 +21,7 @@ class OrderItemRepository implements Repository
     public function __construct()
     {
         $this->connection = Database::getConnection();
-        $this->logger = LoggerFactory::getLogger();
+        $this->logger = AppLoggerFactory::getLogger();
     }
 
     public function save(OrderItem $orderItem): int
@@ -43,8 +43,9 @@ class OrderItemRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось сохранить сущность OrderItem для заказа с ID: {$orderItem->getOrderId()}";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         } catch (DBException $e) {
             throw $e;
         }
@@ -68,8 +69,9 @@ class OrderItemRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось обновить сущность OrderItem с ID: {$orderItem->getId()}";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -85,8 +87,9 @@ class OrderItemRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось удалить сущность OrderItem с ID: $id";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -108,8 +111,9 @@ class OrderItemRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось найти сущность OrderItem с ID: $id";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -132,8 +136,9 @@ class OrderItemRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось получить список всех сущностей OrderItem";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -156,8 +161,35 @@ class OrderItemRepository implements Repository
 
         } catch (PDOException $e) {
             $message = "Не удалось получить позиции заказа с ID: $orderId";
-            $this->logger->error($message);
-            throw new DBException($message);
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
+        }
+    }
+    public function findAllByUserId(int $userId): array
+    {
+        try {
+            $sql = "SELECT oi.* FROM order_items oi
+                JOIN orders o ON oi.order_id = o.id
+                WHERE o.user_id = :userId";
+            $stmt = $this->connection->prepare($sql);
+
+            $stmt->execute(['userId' => $userId]);
+
+            $rows = $stmt->fetchAll();
+            $result = [];
+
+            foreach ($rows as $row) {
+                $result[] = $this->mapToOrderItem($row);
+            }
+
+            return $result;
+
+        } catch (PDOException $e) {
+            $message = "Не удалось получить позиции заказа с ID юзера: $userId";
+            $ex = new DBException($message);
+            $this->logger->error($ex->getMessage());
+            throw $ex;
         }
     }
 
